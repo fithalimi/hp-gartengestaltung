@@ -1,36 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import {
-  Phone, MessageCircle, MapPin, Mail, Star, Check,
-  Trees, Construction, Grid3x3, Wrench, Home, ChevronRight, Menu, X
-} from "lucide-react";
 
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "HP Gartengestaltung & Hausmeisterservice Leipheim" },
-      { name: "description", content: "Professionelle Gartengestaltung, Pflasterarbeiten, Fliesenlegen und Hausmeisterservice in Leipheim. Zuverlässig, sauber und termintreu." },
-      { property: "og:title", content: "HP Gartengestaltung & Hausmeisterservice Leipheim" },
-      { property: "og:description", content: "Pflasterarbeiten, Fliesenlegen und alle Arbeiten rund ums Haus." },
-    ],
-  }),
   component: Index,
 });
-
-const services = [
-  { icon: Trees, title: "Gartengestaltung", items: ["Gartenplanung", "Rasenflächen", "Terrassenbau", "Naturstein", "Gartenwege"] },
-  { icon: Construction, title: "Pflasterarbeiten", items: ["Einfahrten", "Hofpflaster", "Gehwege", "Terrassen", "Randsteine"] },
-  { icon: Grid3x3, title: "Fliesenarbeiten", items: ["Bodenfliesen", "Wandfliesen", "Badezimmer", "Großformat"] },
-  { icon: Wrench, title: "Hausmeister", items: ["Objektbetreuung", "Reparaturen", "Pflegearbeiten", "Winterdienst"] },
-  { icon: Home, title: "Rund ums Haus", items: ["Außenanlagen", "Instandhaltung", "Renovierungen", "Handwerkerarbeiten"] },
-];
-
-const steps = [
-  { n: "1", title: "Beratung", text: "Kostenlose Beratung und Besichtigung vor Ort. Wir hören Ihnen zu und beraten Sie kompetent." },
-  { n: "2", title: "Planung", text: "Wir planen Ihr Projekt individuell nach Ihren Wünschen und erstellen ein detailliertes Angebot." },
-  { n: "3", title: "Umsetzung", text: "Professionelle und saubere Ausführung durch unser erfahrenes Team mit modernster Ausrüstung." },
-  { n: "4", title: "Fertigstellung", text: "Ihr Projekt wird termingerecht abgeschlossen. Wir übergeben Ihnen das fertige Ergebnis." },
-];
 
 const reviews = [
   { initials: "MP", name: "Melanie Pongratz", text: "Super Preis-Leistungsverhältnis. Pari kam direkt nach der Angebotsanfrage persönlich vorbei und es wurde ein Kostenvorschlag abgegeben. Arbeiten wurden wie besprochen und super schnell durchgeführt. Es wurde sauber gearbeitet. Team ist ebenfalls super nett. Immer wieder gerne und mehr als zu empfehlen." },
@@ -45,6 +18,14 @@ const reviews = [
   { initials: "VW", name: "Viktor Wolf", text: "Vielen Dank für Ihre perfekte Arbeit." },
 ];
 
+const services = [
+  { icon: "leaf", title: "Gartengestaltung", items: ["Gartenplanung", "Rasenflächen", "Terrassenbau", "Naturstein", "Gartenwege"] },
+  { icon: "layer-group", title: "Pflasterarbeiten", items: ["Einfahrten", "Hofpflaster", "Gehwege", "Terrassen", "Randsteine"] },
+  { icon: "th-large", title: "Fliesenarbeiten", items: ["Bodenfliesen", "Wandfliesen", "Badezimmer", "Großformat"] },
+  { icon: "home", title: "Hausmeister", items: ["Objektbetreuung", "Reparaturen", "Pflegearbeiten", "Winterdienst"] },
+  { icon: "tools", title: "Rund ums Haus", items: ["Außenanlagen", "Instandhaltung", "Renovierungen", "Handwerkerarbeiten"] },
+];
+
 const projects = [
   { img: "/images/project1.jpg", title: "Perfekte Einfahrten & Wege", sub: "Sauber · Präzise · Langlebig" },
   { img: "/images/project2.jpg", title: "Pflasterarbeiten", sub: "Professionelle Verlegung" },
@@ -52,82 +33,105 @@ const projects = [
   { img: "/images/project4.jpg", title: "Baggerarbeiten", sub: "Präzise Verlegung" },
 ];
 
-function TopBar() {
-  return (
-    <div className="hidden md:block bg-dark text-dark-foreground text-sm">
-      <div className="max-w-7xl mx-auto px-6 py-2.5 flex items-center justify-between">
-        <div className="flex items-center gap-6">
-          <a href="tel:+4917189365770" className="flex items-center gap-2 hover:text-brand transition"><Phone className="w-4 h-4" />0171 8936577</a>
-          <a href="https://wa.me/491718936577" className="flex items-center gap-2 hover:text-brand transition"><MessageCircle className="w-4 h-4" />WhatsApp</a>
-          <span className="flex items-center gap-2 text-dark-foreground/80"><MapPin className="w-4 h-4 text-brand" />Leipheim</span>
-        </div>
-        <a href="#kontakt" className="bg-brand text-brand-foreground px-4 py-1.5 rounded-md font-semibold hover:opacity-90 transition">Kostenloses Angebot</a>
-      </div>
-    </div>
-  );
+function FaIcon({ icon, className = "" }: { icon: string; className?: string }) {
+  return <i className={`fas fa-${icon} ${className}`} aria-hidden="true" />;
+}
+
+function FabIcon({ icon, className = "" }: { icon: string; className?: string }) {
+  return <i className={`fab fa-${icon} ${className}`} aria-hidden="true" />;
 }
 
 function Header() {
   const [open, setOpen] = useState(false);
   return (
-    <header className="sticky top-0 z-50 bg-background/95 backdrop-blur border-b border-border">
-      <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-        <a href="#" className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-lg bg-brand/10 border-2 border-brand flex items-center justify-center font-black text-brand text-xl">HP</div>
-          <div className="hidden sm:block leading-tight">
-            <div className="font-bold text-sm">HP Hausmeister</div>
-            <div className="text-xs text-muted-foreground">Garten- & Landschaftsbau</div>
+    <header id="global-header">
+      <div className="bg-[#111111] text-white text-sm w-full hidden sm:block">
+        <div className="w-full px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-10 max-w-[1600px] mx-auto">
+            <div className="flex items-center gap-6">
+              <a href="tel:+491718936577" className="flex items-center gap-2 hover:text-[#19A34A] transition-colors">
+                <FaIcon icon="phone-alt" className="text-xs" />
+                <span>0171 8936577</span>
+              </a>
+              <a href="https://wa.me/491718936577" target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-[#19A34A] transition-colors">
+                <FabIcon icon="whatsapp" className="text-xs" />
+                <span>WhatsApp</span>
+              </a>
+              <div className="hidden md:flex items-center gap-2">
+                <FaIcon icon="map-marker-alt" className="text-xs text-[#19A34A]" />
+                <span>Leipheim</span>
+              </div>
+            </div>
+            <a href="#kontakt" className="bg-[#19A34A] text-white px-4 py-1.5 rounded-lg font-medium text-xs hover:bg-[#0E6B33] transition-all">Kostenloses Angebot</a>
           </div>
-        </a>
-        <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
-          <a href="#leistungen" className="hover:text-brand transition">Leistungen</a>
-          <a href="#projekte" className="hover:text-brand transition">Projekte</a>
-          <a href="#ueber" className="hover:text-brand transition">Über Uns</a>
-          <a href="#kontakt" className="bg-brand text-brand-foreground px-5 py-2.5 rounded-md font-semibold hover:opacity-90 transition">Kontakt</a>
-        </nav>
-        <button onClick={() => setOpen(!open)} className="md:hidden p-2" aria-label="Menu">
-          {open ? <X /> : <Menu />}
-        </button>
-      </div>
-      {open && (
-        <div className="md:hidden border-t border-border bg-background">
-          <nav className="flex flex-col p-4 gap-1">
-            {[["Leistungen","#leistungen"],["Projekte","#projekte"],["Über Uns","#ueber"],["Kontakt","#kontakt"]].map(([l,h])=>(
-              <a key={h} href={h} onClick={()=>setOpen(false)} className="px-4 py-3 rounded-md hover:bg-secondary font-medium">{l}</a>
-            ))}
-          </nav>
         </div>
-      )}
+      </div>
+      <nav className="bg-white shadow-md w-full">
+        <div className="w-full px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16 sm:h-20 lg:h-28 max-w-[1600px] mx-auto">
+            <a href="/" className="flex items-center">
+              <img src="/images/hero.jpg" alt="HP Gartengestaltung / Hausmeister Logo" className="h-24 sm:h-24 lg:h-28 xl:h-32 py-2" />
+            </a>
+            <div className="hidden lg:flex items-center gap-8">
+              <a href="#leistungen" className="text-[#111111] font-medium hover:text-[#19A34A] transition-colors">Leistungen</a>
+              <a href="#projekte" className="text-[#111111] font-medium hover:text-[#19A34A] transition-colors">Projekte</a>
+              <a href="#ueber-uns" className="text-[#111111] font-medium hover:text-[#19A34A] transition-colors">Über Uns</a>
+              <a href="#kontakt" className="bg-[#19A34A] text-white px-6 py-3 rounded-lg font-medium hover:bg-[#0E6B33] transition-all">Kontakt</a>
+            </div>
+            <button onClick={() => setOpen(!open)} className="lg:hidden p-2 text-[#2C3E50]" aria-label="Menü öffnen">
+              <FaIcon icon={open ? "times" : "bars"} className="text-2xl" />
+            </button>
+          </div>
+        </div>
+        {open && (
+          <div className="lg:hidden bg-white border-t w-full">
+            <div className="px-4 py-4 space-y-3 max-w-[1600px] mx-auto">
+              <a href="#leistungen" onClick={() => setOpen(false)} className="block text-[#111111] font-medium py-2 border-b border-gray-100">Leistungen</a>
+              <a href="#projekte" onClick={() => setOpen(false)} className="block text-[#111111] font-medium py-2 border-b border-gray-100">Projekte</a>
+              <a href="#ueber-uns" onClick={() => setOpen(false)} className="block text-[#111111] font-medium py-2 border-b border-gray-100">Über Uns</a>
+              <a href="#kontakt" onClick={() => setOpen(false)} className="block bg-[#19A34A] text-white px-6 py-3 rounded-lg font-medium text-center mt-4 hover:bg-[#0E6B33]">Kontakt</a>
+            </div>
+          </div>
+        )}
+      </nav>
     </header>
   );
 }
 
 function Hero() {
   return (
-    <section className="relative min-h-[88vh] flex items-center">
-      <div className="absolute inset-0">
+    <section className="relative h-[85vh] min-h-[500px] sm:min-h-[600px] lg:min-h-[700px] flex items-center justify-center overflow-hidden" id="seizxx">
+      <div className="absolute inset-0 z-0">
         <img src="/images/hero.jpg" alt="Gartengestaltung Leipheim" className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-dark/70" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40" />
       </div>
-      <div className="relative max-w-5xl mx-auto px-6 py-24 text-center text-dark-foreground">
-        <h1 className="text-4xl md:text-6xl lg:text-7xl font-black leading-tight">
-          Professionelle <span className="text-brand">Gartengestaltung</span> & Hausmeisterservice in Leipheim
+      <div className="relative z-10 w-full px-4 sm:px-6 lg:px-8 max-w-[1200px] mx-auto text-center">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-4 sm:mb-6">
+          Professionelle <span className="text-[#19A34A]">Gartengestaltung</span> &amp;
+          Hausmeisterservice in Leipheim
         </h1>
-        <p className="mt-8 text-lg md:text-xl text-dark-foreground/85 max-w-2xl mx-auto">
-          Pflasterarbeiten, Fliesenlegen und alle Arbeiten rund ums Haus – zuverlässig, sauber und termintreu.
+        <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-200 mb-6 sm:mb-8 lg:mb-10 max-w-3xl mx-auto">
+          Pflasterarbeiten, Fliesenlegen und alle Arbeiten rund ums Haus –
+          zuverlässig, sauber und termintreu.
         </p>
-        <div className="mt-10 flex flex-wrap gap-4 justify-center">
-          <a href="#kontakt" className="bg-brand text-brand-foreground px-8 py-4 rounded-md font-bold text-lg hover:opacity-90 transition shadow-lg">Angebot anfragen</a>
-          <a href="https://wa.me/491718936577" className="bg-dark/60 border-2 border-dark-foreground/30 text-dark-foreground px-8 py-4 rounded-md font-bold text-lg hover:bg-dark/80 transition flex items-center gap-2">
-            <MessageCircle className="w-5 h-5" />WhatsApp Kontakt
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mb-6 sm:mb-8">
+          <a href="#kontakt" className="bg-[#19A34A] text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-[#0E6B33] transition-all transform hover:scale-105 shadow-lg">
+            Angebot anfragen
+          </a>
+          <a href="https://wa.me/491718936577" target="_blank" rel="noreferrer" className="bg-white/10 backdrop-blur-sm text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-white/20 transition-all border border-white/30 flex items-center justify-center gap-3">
+            <FabIcon icon="whatsapp" className="text-2xl" />
+            WhatsApp Kontakt
           </a>
         </div>
-        <div className="mt-10 flex items-center justify-center gap-3">
-          <div className="flex gap-1">
-            {[...Array(5)].map((_,i)=>(<Star key={i} className="w-5 h-5 fill-brand text-brand" />))}
+        <div className="flex items-center justify-center gap-2 text-white">
+          <div className="flex text-[#19A34A]">
+            <FaIcon icon="star" /><FaIcon icon="star" /><FaIcon icon="star" /><FaIcon icon="star" /><FaIcon icon="star" />
           </div>
-          <span className="text-dark-foreground/90 font-medium">5,0 Sterne bei Google</span>
+          <span className="text-lg font-medium ml-2">5,0 Sterne bei Google</span>
         </div>
+      </div>
+      <div className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <FaIcon icon="chevron-down" className="text-white text-xl sm:text-2xl" />
       </div>
     </section>
   );
@@ -135,33 +139,35 @@ function Hero() {
 
 function Services() {
   return (
-    <section id="leistungen" className="py-24 bg-secondary">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="text-brand font-semibold uppercase tracking-wider mb-3">Unsere Leistungen</div>
-          <h2 className="text-3xl md:text-5xl font-black">Alles aus einer Hand</h2>
-          <p className="mt-4 text-lg text-muted-foreground">Kompetente Handwerksarbeit aus Leipheim</p>
-          <a href="tel:+491718936577" className="inline-flex items-center gap-2 mt-6 text-brand font-bold hover:underline"><Phone className="w-4 h-4" />Jetzt anrufen</a>
+    <section className="py-20 bg-[#F5F7F9] w-full" id="leistungen">
+      <div className="w-full px-4 sm:px-6 lg:px-8 max-w-[1600px] mx-auto">
+        <div className="text-center mb-8 sm:mb-16">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#111111] mb-4">Unsere Leistungen</h2>
+          <p className="text-lg text-[#6B7280] max-w-2xl mx-auto">Alles aus einer Hand – kompetente Handwerksarbeit aus Leipheim</p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {services.map((s) => {
-            const Icon = s.icon;
-            return (
-              <div key={s.title} className="bg-card rounded-xl p-8 border border-border hover:border-brand hover:-translate-y-1 transition-all duration-300 shadow-sm hover:shadow-xl">
-                <div className="w-14 h-14 rounded-lg bg-brand/10 flex items-center justify-center mb-6">
-                  <Icon className="w-7 h-7 text-brand" />
-                </div>
-                <h3 className="text-xl font-bold mb-4">{s.title}</h3>
-                <ul className="space-y-2">
-                  {s.items.map((it) => (
-                    <li key={it} className="flex items-center gap-2 text-muted-foreground">
-                      <Check className="w-4 h-4 text-brand flex-shrink-0" />{it}
-                    </li>
-                  ))}
-                </ul>
+        <div className="text-center mb-8">
+          <a href="tel:+491718936577" className="inline-flex items-center justify-center gap-3 bg-[#19A34A] text-white font-bold text-lg px-8 py-4 rounded-full hover:bg-[#0E6B33] transition-all duration-300 shadow-lg">
+            <FaIcon icon="phone-alt" />
+            Jetzt anrufen
+          </a>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
+          {services.map((s) => (
+            <div key={s.title} className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border-t-4 border-[#19A34A]">
+              <div className="w-16 h-16 bg-[#19A34A]/10 rounded-xl flex items-center justify-center mb-4">
+                <FaIcon icon={s.icon} className="text-3xl text-[#19A34A]" />
               </div>
-            );
-          })}
+              <h3 className="text-xl font-bold text-[#111111] mb-3">{s.title}</h3>
+              <ul className="space-y-2 text-base text-[#6B7280]">
+                {s.items.map((it) => (
+                  <li key={it} className="flex items-center gap-2">
+                    <FaIcon icon="check" className="text-[#19A34A] text-xs" />
+                    {it}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
       </div>
     </section>
@@ -170,35 +176,49 @@ function Services() {
 
 function About() {
   return (
-    <section id="ueber" className="py-24">
-      <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
-        <div className="relative">
-          <img src="/images/about.jpg" alt="Ihr Partner für Handwerksarbeit" className="rounded-2xl shadow-2xl w-full" />
-          <div className="absolute -bottom-6 -right-6 bg-brand text-brand-foreground rounded-2xl p-6 shadow-xl">
-            <div className="text-5xl font-black">15+</div>
-            <div className="font-semibold">Jahre Erfahrung</div>
+    <section className="py-20 bg-white w-full" id="ueber-uns">
+      <div className="w-full px-4 sm:px-6 lg:px-8 max-w-[1600px] mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="relative">
+            <img src="/images/about.jpg" alt="Ihr Partner für Handwerksarbeit" className="rounded-2xl shadow-2xl w-full h-[250px] sm:h-[350px] lg:h-[500px] object-cover" />
+            <div className="absolute -bottom-4 -right-4 sm:-bottom-6 sm:-right-6 bg-[#19A34A] text-white p-4 sm:p-6 rounded-xl shadow-lg">
+              <p className="text-4xl font-bold">15+</p>
+              <p className="text-sm font-medium">Jahre Erfahrung</p>
+            </div>
           </div>
-        </div>
-        <div>
-          <div className="text-brand font-semibold uppercase tracking-wider mb-3">Über Uns</div>
-          <h2 className="text-3xl md:text-5xl font-black mb-6">Ihr Partner für Handwerksarbeit in Leipheim</h2>
-          <p className="text-lg text-muted-foreground mb-4">
-            HP Gartengestaltung / Hausmeister steht für zuverlässige Handwerksarbeit, saubere Ausführung und zufriedene Kunden.
-          </p>
-          <p className="text-lg text-muted-foreground mb-8">
-            Mit Erfahrung im Gartenbau, Pflasterarbeiten, Fliesenlegen und Hausmeisterservice kümmern wir uns um alles rund ums Haus. Unser Anspruch ist höchste Qualität, saubere Arbeit und termingerechte Umsetzung.
-          </p>
-          <div className="grid grid-cols-2 gap-4 mb-8">
-            {["Qualitätsarbeit","Termintreu","Saubere Arbeit","Zuverlässig"].map((f)=>(
-              <div key={f} className="flex items-center gap-3 font-semibold">
-                <div className="w-8 h-8 rounded-full bg-brand/15 flex items-center justify-center"><Check className="w-4 h-4 text-brand" /></div>
-                {f}
-              </div>
-            ))}
-          </div>
-          <div className="flex flex-wrap gap-4">
-            <a href="#kontakt" className="bg-brand text-brand-foreground px-6 py-3 rounded-md font-bold hover:opacity-90 transition">Jetzt Angebot anfragen</a>
-            <a href="#projekte" className="border-2 border-border px-6 py-3 rounded-md font-bold hover:border-brand transition">Unsere Projekte</a>
+          <div>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#111111] mb-6">Ihr Partner für Handwerksarbeit in Leipheim</h2>
+            <p className="text-lg text-[#6B7280] mb-6 leading-relaxed">
+              HP Gartengestaltung / Hausmeister steht für zuverlässige Handwerksarbeit, saubere Ausführung und zufriedene Kunden.
+            </p>
+            <p className="text-lg text-[#6B7280] mb-6 leading-relaxed">
+              Mit Erfahrung im Gartenbau, Pflasterarbeiten, Fliesenlegen und Hausmeisterservice kümmern wir uns um alles rund ums Haus. Unser Anspruch ist höchste Qualität, saubere Arbeit und termingerechte Umsetzung.
+            </p>
+            <div className="grid grid-cols-2 gap-4 mb-8">
+              {[
+                { icon: "check-circle", label: "Qualitätsarbeit" },
+                { icon: "clock", label: "Termintreu" },
+                { icon: "broom", label: "Saubere Arbeit" },
+                { icon: "user-tie", label: "Zuverlässig" },
+              ].map((f) => (
+                <div key={f.label} className="flex items-center gap-3">
+                  <div className="w-12 h-12 bg-[#19A34A]/10 rounded-full flex items-center justify-center">
+                    <FaIcon icon={f.icon} className="text-[#19A34A] text-xl" />
+                  </div>
+                  <span className="font-medium text-[#111111]">{f.label}</span>
+                </div>
+              ))}
+            </div>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <a href="#kontakt" className="inline-flex items-center justify-center gap-3 bg-[#19A34A] text-white font-bold text-lg px-8 py-4 rounded-full hover:bg-[#0E6B33] transition-all duration-300 shadow-lg">
+                Jetzt Angebot anfragen
+                <FaIcon icon="arrow-right" />
+              </a>
+              <a href="#projekte" className="inline-flex items-center justify-center gap-3 bg-white text-[#19A34A] font-bold text-lg px-8 py-4 rounded-full border-2 border-[#19A34A] hover:bg-[#19A34A] hover:text-white transition-all duration-300 shadow-lg">
+                Unsere Projekte
+                <FaIcon icon="arrow-right" />
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -207,21 +227,31 @@ function About() {
 }
 
 function Process() {
+  const steps = [
+    { n: "1", icon: "comments", title: "Beratung", text: "Kostenlose Beratung und Besichtigung vor Ort. Wir hören Ihnen zu und beraten Sie kompetent." },
+    { n: "2", icon: "pencil-alt", title: "Planung", text: "Wir planen Ihr Projekt individuell nach Ihren Wünschen und erstellen ein detailliertes Angebot." },
+    { n: "3", icon: "hard-hat", title: "Umsetzung", text: "Professionelle und saubere Ausführung durch unser erfahrenes Team mit modernster Ausrüstung." },
+    { n: "4", icon: "check-circle", title: "Fertigstellung", text: "Ihr Projekt wird termingerecht abgeschlossen. Wir übergeben Ihnen das fertige Ergebnis." },
+  ];
   return (
-    <section className="py-24 bg-dark text-dark-foreground">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="text-brand font-semibold uppercase tracking-wider mb-3">Ablauf</div>
-          <h2 className="text-3xl md:text-5xl font-black">So läuft Ihr Projekt ab</h2>
-          <p className="mt-4 text-lg text-dark-foreground/70">Professionell, transparent und kundenorientiert – von der Beratung bis zur Fertigstellung</p>
+    <section className="py-16 sm:py-20 w-full relative" id="swko714" style={{ backgroundImage: "url('/images/bg.jpg')", backgroundAttachment: "scroll", backgroundPosition: "center", backgroundRepeat: "no-repeat", backgroundSize: "cover" }}>
+      <div className="absolute inset-0 bg-black/70" />
+      <div className="relative z-10 w-full px-4 sm:px-6 lg:px-8 max-w-[1600px] mx-auto">
+        <div className="text-center mb-8 sm:mb-16">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">So läuft Ihr Projekt ab</h2>
+          <p className="text-lg text-gray-300 max-w-2xl mx-auto">Professionell, transparent und kundenorientiert – von der Beratung bis zur Fertigstellung</p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {steps.map((s, i) => (
-            <div key={s.n} className="relative bg-dark-foreground/5 border border-dark-foreground/10 rounded-xl p-8">
-              <div className="w-14 h-14 rounded-full bg-brand text-brand-foreground flex items-center justify-center text-2xl font-black mb-5">{s.n}</div>
-              <h3 className="text-xl font-bold mb-3">{s.title}</h3>
-              <p className="text-dark-foreground/70">{s.text}</p>
-              {i < steps.length - 1 && <ChevronRight className="hidden lg:block absolute top-1/2 -right-5 w-6 h-6 text-brand/60" />}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
+          {steps.map((s) => (
+            <div key={s.n} className="text-center group">
+              <div className="relative inline-block mb-4 sm:mb-6">
+                <div className="w-20 h-20 sm:w-24 sm:h-24 bg-[#19A34A] rounded-full flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-300">
+                  <FaIcon icon={s.icon} className="text-3xl sm:text-4xl text-white" />
+                </div>
+                <div className="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 w-6 h-6 sm:w-8 sm:h-8 bg-[#19A34A] rounded-full flex items-center justify-center text-white font-bold text-sm sm:text-base">{s.n}</div>
+              </div>
+              <h3 className="text-xl font-bold text-white mb-3">{s.title}</h3>
+              <p className="text-gray-300">{s.text}</p>
             </div>
           ))}
         </div>
@@ -231,33 +261,59 @@ function Process() {
 }
 
 function Reviews() {
+  const [page, setPage] = useState(0);
+  const perPage = 3;
+  const totalPages = Math.ceil(reviews.length / perPage);
+  const visible = reviews.slice(page * perPage, (page + 1) * perPage);
+
   return (
-    <section className="py-24 bg-secondary">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="text-brand font-semibold uppercase tracking-wider mb-3">Kundenbewertungen</div>
-          <h2 className="text-3xl md:text-5xl font-black">Das sagen unsere Kunden</h2>
-          <div className="mt-6 inline-flex items-center gap-3 bg-card px-6 py-3 rounded-full shadow-sm border border-border">
-            <div className="flex gap-1">{[...Array(5)].map((_,i)=>(<Star key={i} className="w-5 h-5 fill-brand text-brand" />))}</div>
-            <span className="font-bold">5,0</span><span className="text-muted-foreground">Google Bewertung</span>
+    <section className="py-20 bg-white w-full" id="sxr5jpk">
+      <div className="w-full px-4 sm:px-6 lg:px-8 max-w-[1600px] mx-auto">
+        <div className="text-center mb-6 sm:mb-10">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#111111] mb-2">Kundenbewertungen</h2>
+          <p className="text-lg text-[#6B7280] mb-4">Das sagen unsere Kunden über unsere Arbeit.</p>
+          <div className="flex items-center justify-center gap-2">
+            <div className="flex text-[#19A34A] text-xl">
+              <FaIcon icon="star" /><FaIcon icon="star" /><FaIcon icon="star" /><FaIcon icon="star" /><FaIcon icon="star" />
+            </div>
+            <span className="text-xl font-bold text-[#111111]">5,0</span>
+            <span className="text-[#6B7280]">Google Bewertung</span>
           </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {reviews.map((r) => (
-            <div key={r.name} className="bg-card rounded-xl p-6 border border-border shadow-sm">
-              <div className="flex gap-1 mb-4">{[...Array(5)].map((_,i)=>(<Star key={i} className="w-4 h-4 fill-brand text-brand" />))}</div>
-              <p className="text-muted-foreground mb-6 leading-relaxed">"{r.text}"</p>
-              <div className="flex items-center gap-3 pt-4 border-t border-border">
-                <div className="w-10 h-10 rounded-full bg-brand/15 text-brand flex items-center justify-center font-bold text-sm">{r.initials}</div>
-                <div className="font-semibold">{r.name}</div>
-              </div>
+
+        <div className="relative">
+          <button onClick={() => setPage((p) => (p - 1 + totalPages) % totalPages)} className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 sm:-translate-x-4 z-10 w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full shadow-lg flex items-center justify-center text-[#19A34A] hover:bg-[#19A34A] hover:text-white transition-all duration-300">
+            <FaIcon icon="chevron-left" className="text-lg" />
+          </button>
+
+          <div className="overflow-hidden px-8 sm:px-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+              {visible.map((r) => (
+                <div key={r.name} className="bg-white rounded-2xl p-6 shadow-lg h-full border border-gray-100">
+                  <div className="flex items-center gap-1 text-[#19A34A] mb-3">
+                    <FaIcon icon="star" className="text-sm" /><FaIcon icon="star" className="text-sm" /><FaIcon icon="star" className="text-sm" /><FaIcon icon="star" className="text-sm" /><FaIcon icon="star" className="text-sm" />
+                  </div>
+                  <p className="text-[#111111] mb-4 text-sm leading-relaxed">{r.text}</p>
+                  <div className="flex items-center gap-3 pt-4 border-t border-gray-100">
+                    <div className="w-12 h-12 rounded-full bg-[#19A34A] flex items-center justify-center">
+                      <span className="text-xl font-bold text-white">{r.initials}</span>
+                    </div>
+                    <p className="font-bold text-[#111111] text-lg">{r.name}</p>
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
+
+          <button onClick={() => setPage((p) => (p + 1) % totalPages)} className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 sm:translate-x-4 z-10 w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full shadow-lg flex items-center justify-center text-[#19A34A] hover:bg-[#19A34A] hover:text-white transition-all duration-300">
+            <FaIcon icon="chevron-right" className="text-lg" />
+          </button>
         </div>
-        <div className="text-center mt-12">
-          <a href="https://maps.app.goo.gl/T8C7CA7tcYcxQrpP8" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 bg-brand text-brand-foreground px-6 py-3 rounded-md font-bold hover:opacity-90 transition">
-            <Star className="w-4 h-4 fill-current" />Jetzt auf Google bewerten
-          </a>
+
+        <div className="flex justify-center gap-2 mt-6">
+          {Array.from({ length: totalPages }).map((_, i) => (
+            <button key={i} onClick={() => setPage(i)} className={`w-3 h-3 rounded-full transition-all ${i === page ? "bg-[#19A34A]" : "bg-gray-300"}`} aria-label={`Seite ${i + 1}`} />
+          ))}
         </div>
       </div>
     </section>
@@ -266,27 +322,29 @@ function Reviews() {
 
 function Projects() {
   return (
-    <section id="projekte" className="py-24">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="text-brand font-semibold uppercase tracking-wider mb-3">Unsere Projekte</div>
-          <h2 className="text-3xl md:text-5xl font-black">Ein kleiner Einblick</h2>
-          <p className="mt-4 text-lg text-muted-foreground">Abgeschlossene Projekte aus unserer Werkstatt</p>
+    <section className="py-20 bg-[#F5F7F9] w-full" id="projekte">
+      <div className="w-full px-4 sm:px-6 lg:px-8 max-w-[1600px] mx-auto">
+        <div className="text-center mb-8 sm:mb-16">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#111111] mb-4">Unsere Projekte</h2>
+          <p className="text-lg text-[#6B7280] max-w-2xl mx-auto">Ein kleiner Einblick in unsere abgeschlossenen Projekte</p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="text-center mt-10 sm:mt-16 mb-12 sm:mb-20">
+          <a href="#kontakt" className="inline-flex items-center gap-2 sm:gap-3 bg-[#19A34A] text-white font-bold text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 rounded-full hover:bg-[#0E6B33] transition-all duration-300 shadow-lg">
+            Projekt anfragen
+            <FaIcon icon="arrow-right" />
+          </a>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {projects.map((p) => (
-            <div key={p.title} className="group relative rounded-2xl overflow-hidden aspect-[4/3] shadow-md">
-              <img src={p.img} alt={p.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-              <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/40 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-6 text-dark-foreground">
-                <h3 className="text-2xl font-bold mb-1">{p.title}</h3>
-                <p className="text-dark-foreground/80">{p.sub}</p>
+            <div key={p.title} className="group relative overflow-hidden rounded-2xl shadow-lg aspect-square">
+              <img src={p.img} alt={p.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                <h3 className="text-xl font-bold">{p.title}</h3>
+                <p className="text-sm text-gray-200">{p.sub}</p>
               </div>
             </div>
           ))}
-        </div>
-        <div className="text-center mt-12">
-          <a href="#kontakt" className="inline-block bg-brand text-brand-foreground px-8 py-4 rounded-md font-bold hover:opacity-90 transition">Projekt anfragen</a>
         </div>
       </div>
     </section>
@@ -296,114 +354,185 @@ function Projects() {
 function Contact() {
   const [sent, setSent] = useState(false);
   return (
-    <section id="kontakt" className="py-24 bg-secondary">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="text-brand font-semibold uppercase tracking-wider mb-3">Kontakt</div>
-          <h2 className="text-3xl md:text-5xl font-black">Kostenloses Angebot anfragen</h2>
-          <p className="mt-4 text-lg text-muted-foreground">Rufen Sie uns an oder schreiben Sie uns eine Nachricht. Wir beraten Sie kostenlos und unverbindlich.</p>
-        </div>
-        <div className="grid lg:grid-cols-2 gap-10">
-          <div className="space-y-5">
-            {[
-              { icon: MapPin, label: "Adresse", value: "Brühlgasse 8, 89340 Leipheim", href: null },
-              { icon: Phone, label: "Telefon", value: "0171 8936577", href: "tel:+491718936577" },
-              { icon: MessageCircle, label: "WhatsApp", value: "Nachricht senden", href: "https://wa.me/491718936577" },
-              { icon: Mail, label: "E-Mail", value: "hp-hausmeister@hotmail.com", href: "mailto:hp-hausmeister@hotmail.com" },
-            ].map(({ icon: Icon, label, value, href }) => (
-              <div key={label} className="flex items-start gap-4 bg-card p-6 rounded-xl border border-border">
-                <div className="w-12 h-12 rounded-lg bg-brand/15 flex items-center justify-center flex-shrink-0">
-                  <Icon className="w-6 h-6 text-brand" />
+    <section className="py-20 bg-[#111111] w-full" id="kontakt">
+      <div id="kontakt" className="w-full px-4 sm:px-6 lg:px-8 max-w-[1600px] mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6">Kostenloses Angebot anfragen</h2>
+            <p className="text-lg text-gray-300 mb-8">Rufen Sie uns an oder schreiben Sie uns eine Nachricht. Wir beraten Sie kostenlos und unverbindlich.</p>
+            <div className="space-y-4">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-[#19A34A] rounded-full flex items-center justify-center">
+                  <FaIcon icon="map-marker-alt" className="text-white" />
                 </div>
                 <div>
-                  <div className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">{label}</div>
-                  {href ? <a href={href} className="text-lg font-bold hover:text-brand">{value}</a> : <div className="text-lg font-bold">{value}</div>}
+                  <p className="text-white font-medium">Adresse</p>
+                  <p className="text-gray-300">Brühlgasse 8, 89340 Leipheim</p>
                 </div>
               </div>
-            ))}
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-[#19A34A] rounded-full flex items-center justify-center">
+                  <FaIcon icon="phone-alt" className="text-white" />
+                </div>
+                <div>
+                  <p className="text-white font-medium">Telefon</p>
+                  <a href="tel:+491718936577" className="text-gray-300 hover:text-[#19A34A] transition-colors">0171 8936577</a>
+                </div>
+              </div>
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-[#19A34A] rounded-full flex items-center justify-center">
+                  <FabIcon icon="whatsapp" className="text-white" />
+                </div>
+                <div>
+                  <p className="text-white font-medium">WhatsApp</p>
+                  <a href="https://wa.me/491718936577" target="_blank" rel="noreferrer" className="text-gray-300 hover:text-[#19A34A] transition-colors">Nachricht senden</a>
+                </div>
+              </div>
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-[#19A34A] rounded-full flex items-center justify-center">
+                  <FaIcon icon="envelope" className="text-white" />
+                </div>
+                <div>
+                  <p className="text-white font-medium">E-Mail</p>
+                  <a href="mailto:hp-hausmeister@hotmail.com" className="text-gray-300 hover:text-[#19A34A] transition-colors">hp-hausmeister@hotmail.com</a>
+                </div>
+              </div>
+            </div>
           </div>
-          <form
-            onSubmit={(e) => { e.preventDefault(); setSent(true); }}
-            className="bg-card p-8 rounded-2xl border border-border shadow-sm space-y-4"
-          >
-            <div>
-              <label className="block text-sm font-semibold mb-2">Name</label>
-              <input required type="text" className="w-full px-4 py-3 rounded-md border border-input bg-background focus:outline-none focus:ring-2 focus:ring-brand" />
-            </div>
-            <div>
-              <label className="block text-sm font-semibold mb-2">Telefon</label>
-              <input required type="tel" className="w-full px-4 py-3 rounded-md border border-input bg-background focus:outline-none focus:ring-2 focus:ring-brand" />
-            </div>
-            <div>
-              <label className="block text-sm font-semibold mb-2">E-Mail</label>
-              <input required type="email" className="w-full px-4 py-3 rounded-md border border-input bg-background focus:outline-none focus:ring-2 focus:ring-brand" />
-            </div>
-            <div>
-              <label className="block text-sm font-semibold mb-2">Nachricht</label>
-              <textarea required rows={5} className="w-full px-4 py-3 rounded-md border border-input bg-background focus:outline-none focus:ring-2 focus:ring-brand resize-none" />
-            </div>
-            <button type="submit" className="w-full bg-brand text-brand-foreground py-4 rounded-md font-bold text-lg hover:opacity-90 transition">
-              {sent ? "Vielen Dank! Wir melden uns." : "Kostenloses Angebot anfragen"}
-            </button>
-          </form>
+          <div className="bg-white rounded-2xl p-4 sm:p-6 lg:p-8">
+            <form onSubmit={(e) => { e.preventDefault(); setSent(true); }} className="space-y-4 sm:space-y-6">
+              <div>
+                <label htmlFor="name" className="block text-sm font-medium text-[#111111] mb-2">Name</label>
+                <input type="text" id="name" name="name" className="w-full px-3 sm:px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#19A34A] focus:border-transparent outline-none transition-all bg-white text-base" placeholder="Ihr Name" required />
+              </div>
+              <div>
+                <label htmlFor="phone" className="block text-sm font-medium text-[#111111] mb-2">Telefon</label>
+                <input type="tel" id="phone" name="phone" className="w-full px-3 sm:px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#19A34A] focus:border-transparent outline-none transition-all bg-white text-base" placeholder="Ihre Telefonnummer" required />
+              </div>
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-[#111111] mb-2">E-Mail</label>
+                <input type="email" id="email" name="email" className="w-full px-3 sm:px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#19A34A] focus:border-transparent outline-none transition-all bg-white text-base" placeholder="Ihre E-Mail-Adresse" required />
+              </div>
+              <div>
+                <label htmlFor="message" className="block text-sm font-medium text-[#111111] mb-2">Nachricht</label>
+                <textarea id="message" name="message" rows={4} className="w-full px-3 sm:px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#19A34A] focus:border-transparent outline-none transition-all resize-none bg-white text-base" placeholder="Wie können wir Ihnen helfen?" required />
+              </div>
+              <button type="submit" className="w-full bg-[#19A34A] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-bold text-base sm:text-lg hover:bg-[#0E6B33] transition-all">
+                {sent ? "Vielen Dank! Wir melden uns." : "Kostenloses Angebot anfragen"}
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     </section>
   );
 }
 
-function Footer() {
+function Map() {
   return (
-    <footer className="bg-dark text-dark-foreground py-12">
-      <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-8">
-        <div>
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-12 h-12 rounded-lg bg-brand/20 border-2 border-brand flex items-center justify-center font-black text-brand">HP</div>
-            <div>
-              <div className="font-bold">HP Hausmeister</div>
-              <div className="text-xs text-dark-foreground/60">Garten- & Landschaftsbau</div>
-            </div>
-          </div>
-          <p className="text-dark-foreground/70 text-sm">Professionelle Handwerksarbeit aus Leipheim – zuverlässig, sauber und termintreu.</p>
-        </div>
-        <div>
-          <h4 className="font-bold mb-4">Kontakt</h4>
-          <ul className="space-y-2 text-sm text-dark-foreground/70">
-            <li>Brühlgasse 8, 89340 Leipheim</li>
-            <li><a href="tel:+491718936577" className="hover:text-brand">0171 8936577</a></li>
-            <li><a href="mailto:hp-hausmeister@hotmail.com" className="hover:text-brand">hp-hausmeister@hotmail.com</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4 className="font-bold mb-4">Navigation</h4>
-          <ul className="space-y-2 text-sm text-dark-foreground/70">
-            <li><a href="#leistungen" className="hover:text-brand">Leistungen</a></li>
-            <li><a href="#projekte" className="hover:text-brand">Projekte</a></li>
-            <li><a href="#ueber" className="hover:text-brand">Über Uns</a></li>
-            <li><a href="#kontakt" className="hover:text-brand">Kontakt</a></li>
-          </ul>
-        </div>
-      </div>
-      <div className="max-w-7xl mx-auto px-6 mt-10 pt-6 border-t border-dark-foreground/10 text-center text-sm text-dark-foreground/50">
-        © {new Date().getFullYear()} HP Gartengestaltung & Hausmeisterservice. Alle Rechte vorbehalten.
-      </div>
-    </footer>
+    <section className="h-[500px] w-full" id="svv94iu">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2645.0!2d10.2!3d48.45!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47995f0f0f0f0f0f%3A0x0!2sBr%C3%BChlgasse%208%2C%2089340%20Leipheim%2C%20Germany!5e0!3m2!1sen!2sus!4v1600000000000!5m2!1sen!2sus"
+        width="100%"
+        height="100%"
+        style={{ border: 0 }}
+        allowFullScreen
+        loading="lazy"
+        referrerPolicy="no-referrer-when-downgrade"
+        className="w-full h-full"
+        title="Standort Leipheim"
+      />
+    </section>
   );
 }
 
 function WhatsAppFab() {
   return (
-    <a href="https://wa.me/491718936577" target="_blank" rel="noreferrer"
-       className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-brand text-brand-foreground shadow-2xl flex items-center justify-center hover:scale-110 transition">
-      <MessageCircle className="w-6 h-6" />
-    </a>
+    <div className="fixed bottom-6 right-6 z-50" id="svqtunn">
+      <a href="https://wa.me/491718936577" target="_blank" rel="noreferrer" className="bg-[#25D366] text-white w-16 h-16 rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform" aria-label="WhatsApp kontaktieren">
+        <FabIcon icon="whatsapp" className="text-3xl" />
+      </a>
+    </div>
+  );
+}
+
+function Footer() {
+  return (
+    <footer id="global-footer" className="bg-[#111111] text-white w-full">
+      <div className="w-full px-4 sm:px-6 lg:px-8 py-16 max-w-[1600px] mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+          <div>
+            <a href="/" className="inline-block mb-6">
+              <img src="/images/service1.jpg" alt="HP Gartengestaltung / Hausmeister Logo" className="h-48" />
+            </a>
+            <p className="text-gray-300 mb-6">Ihr zuverlässiger Partner für Gartengestaltung, Pflasterarbeiten, Fliesenlegen und Hausmeisterservice in Leipheim und Umgebung.</p>
+            <div className="flex gap-4">
+              <a href="https://wa.me/491718936577" target="_blank" rel="noreferrer" className="w-10 h-10 bg-[#19A34A] rounded-full flex items-center justify-center hover:bg-[#0E6B33] transition-colors">
+                <FabIcon icon="whatsapp" className="text-white" />
+              </a>
+              <a href="tel:+491718936577" className="w-10 h-10 bg-[#19A34A] rounded-full flex items-center justify-center hover:bg-[#0E6B33] transition-colors">
+                <FaIcon icon="phone-alt" className="text-white" />
+              </a>
+            </div>
+          </div>
+          <div>
+            <h3 className="text-lg font-bold mb-6 text-[#19A34A]">Leistungen</h3>
+            <ul className="space-y-3">
+              <li><span className="text-gray-300">Gartengestaltung</span></li>
+              <li><span className="text-gray-300">Pflasterarbeiten</span></li>
+              <li><span className="text-gray-300">Fliesenarbeiten</span></li>
+              <li><span className="text-gray-300">Hausmeisterservice</span></li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="text-lg font-bold mb-6 text-[#19A34A]">Schnelllinks</h3>
+            <ul className="space-y-3">
+              <li><a href="#projekte" className="text-gray-300 hover:text-[#19A34A] transition-colors">Projekte</a></li>
+              <li><a href="#ueber-uns" className="text-gray-300 hover:text-[#19A34A] transition-colors">Über Uns</a></li>
+              <li><a href="#kontakt" className="text-gray-300 hover:text-[#19A34A] transition-colors">Kontakt</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="text-lg font-bold mb-6 text-[#19A34A]">Kontakt</h3>
+            <ul className="space-y-4">
+              <li className="flex items-start gap-3">
+                <FaIcon icon="map-marker-alt" className="text-[#19A34A] mt-1" />
+                <span className="text-gray-300">Brühlgasse 8<br />89340 Leipheim</span>
+              </li>
+              <li className="flex items-center gap-3">
+                <FaIcon icon="phone-alt" className="text-[#19A34A]" />
+                <a href="tel:+491718936577" className="text-gray-300 hover:text-[#19A34A] transition-colors">0171 8936577</a>
+              </li>
+              <li className="flex items-center gap-3">
+                <FabIcon icon="whatsapp" className="text-[#19A34A]" />
+                <a href="https://wa.me/491718936577" target="_blank" rel="noreferrer" className="text-gray-300 hover:text-[#19A34A] transition-colors">WhatsApp</a>
+              </li>
+              <li className="flex items-center gap-3">
+                <FaIcon icon="envelope" className="text-[#19A34A]" />
+                <a href="mailto:hp-hausmeister@hotmail.com" className="text-gray-300 hover:text-[#19A34A] transition-colors">hp-hausmeister@hotmail.com</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div className="border-t border-gray-700 w-full">
+        <div className="w-full px-4 sm:px-6 lg:px-8 py-6 max-w-[1600px] mx-auto">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-gray-400 text-sm">© {new Date().getFullYear()} HP Gartengestaltung / Hausmeister. Alle Rechte vorbehalten.</p>
+            <div className="flex gap-6">
+              <a href="/impressum" className="text-gray-400 text-sm hover:text-[#19A34A] transition-colors">Impressum</a>
+              <a href="/datenschutz" className="text-gray-400 text-sm hover:text-[#19A34A] transition-colors">Datenschutz</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
   );
 }
 
 function Index() {
   return (
-    <div>
-      <TopBar />
+    <div className="font-sans">
       <Header />
       <main>
         <Hero />
@@ -413,6 +542,7 @@ function Index() {
         <Reviews />
         <Projects />
         <Contact />
+        <Map />
       </main>
       <Footer />
       <WhatsAppFab />
